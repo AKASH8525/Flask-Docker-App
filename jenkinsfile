@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Building Docker Image
+                    sh 'docker build -t flask-docker-app .'
+                }
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Running Docker Container
+                    sh 'docker run -d -p 5000:5000 flask-docker-app'
+                }
+            }
+        }
+    }
+}
