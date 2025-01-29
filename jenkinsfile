@@ -1,21 +1,50 @@
 pipeline {
     agent any
+
+    environment {
+        DOCKER_IMAGE = 'flask-docker-app'
+        DOCKER_TAG = 'latest'
+    }
+
     stages {
+        stage('Clone Repository') {
+            steps {
+                git 'git@github.com:AKASH8525/Flask-Docker-App.git'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Building Docker Image
-                    sh 'docker build -t flask-docker-app .'
+                    sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
                 }
             }
         }
+
         stage('Run Docker Container') {
             steps {
                 script {
-                    // Running Docker Container
-                    sh 'docker run -d -p 5000:5000 flask-docker-app'
+                    sh 'docker run -d -p 5000:5000 $DOCKER_IMAGE:$DOCKER_TAG'
                 }
             }
+        }
+
+        stage('Test Flask App') {
+            steps {
+                script {
+                    // Optional: Add tests to check if the Flask app is running correctly.
+                    sh 'curl http://localhost:5000'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
         }
     }
 }
