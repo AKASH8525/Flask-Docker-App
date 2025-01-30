@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'git@github.com:AKASH8525/Flask-Docker-App.git', branch: 'main', credentialsId: 'github-jenkins' // <-- Correct way to specify Git and credentials
+                git url: 'git@github.com:AKASH8525/Flask-Docker-App.git', branch: 'main', credentialsId: 'git (github jenkins)' // <-- Correct way to specify Git and credentials
             }
         }
         stage('Build Docker Image') {
