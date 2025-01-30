@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'git@github.com:AKASH8525/Flask-Docker-App.git'
+                git 'https://github.com/AKASH8525/Flask-Docker-App.git'
             }
         }
 
@@ -32,19 +32,16 @@ pipeline {
         stage('Test Flask App') {
             steps {
                 script {
-                    // Optional: Add tests to check if the Flask app is running correctly.
+                    // Optional: Add tests to check if the Flask app is running correctly
                     sh 'curl http://localhost:5000'
                 }
             }
         }
-    }
 
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-            echo 'Deployment failed!'
+        stage('Post Actions') {
+            steps {
+                echo 'Deployment completed!'
+            }
         }
     }
 }
